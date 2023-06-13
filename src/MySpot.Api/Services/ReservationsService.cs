@@ -1,26 +1,27 @@
 ﻿using MySpot.Api.Commands;
 using MySpot.Api.DTO;
 using MySpot.Api.Entities;
+using MySpot.Api.Repositories;
 using MySpot.Api.ValueObjects;
 
 namespace MySpot.Api.Services;
 
-public class ReservationsService
+public class ReservationsService : IReservationsService
 {
-    private readonly Clock _clock;
-    private readonly List<WeeklyParkingSpot> _weeklyParkingSpots;
+    private readonly IClock _clock;
+    private readonly IWeeklyParkingSpotRepository _weeklyParkingSpotRepository;
 
-    public ReservationsService(Clock clock,List<WeeklyParkingSpot> weeklyParkingSpots)
+    public ReservationsService(IClock clock, IWeeklyParkingSpotRepository weeklyParkingSpotRepository)
     {
         _clock = clock;
-        _weeklyParkingSpots = weeklyParkingSpots;
+        _weeklyParkingSpotRepository = weeklyParkingSpotRepository;
     }
 
     public ReservationDto Get(Guid id)
         => GetAllWeekly().SingleOrDefault(x => x.Id == id);
 
     public IEnumerable<ReservationDto> GetAllWeekly()
-        => _weeklyParkingSpots.SelectMany(x => x.Reservations)
+        => _weeklyParkingSpotRepository.GetAll().SelectMany(x => x.Reservations)
         .Select(x => new ReservationDto
         {
             Id = x.Id,
@@ -33,7 +34,7 @@ public class ReservationsService
     public Guid? Create(CreateReservation command)
     {
         var parkingSpotId = new ParkingSpotId(command.ParkingSpotId);
-        var weeklyParkingSpot = _weeklyParkingSpots.SingleOrDefault(x => x.Id == parkingSpotId);
+        var weeklyParkingSpot = _weeklyParkingSpotRepository.Get(parkingSpotId);
         if (weeklyParkingSpot is null)
         {
             return default;
@@ -96,5 +97,5 @@ public class ReservationsService
     }
 
     private WeeklyParkingSpot GetWeeklyParkingSpotByReservation(ReservationId reservationId)
-        => _weeklyParkingSpots.SingleOrDefault(x => x.Reservations.Any(r => r.Id == reservationId));
+        => _weeklyParkingSpotRepository.GetAll().SingleOrDefault(x => x.Reservations.Any(r => r.Id == reservationId));
 }

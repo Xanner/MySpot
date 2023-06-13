@@ -1,7 +1,7 @@
 ﻿using MySpot.Api.Commands;
-using MySpot.Api.Entities;
+using MySpot.Api.Repositories;
 using MySpot.Api.Services;
-using MySpot.Api.ValueObjects;
+using MySpot.Tests.Unit.Shared;
 using Shouldly;
 using Xunit;
 
@@ -12,7 +12,7 @@ public class ReservationServiceTests
     [Fact]
     public void given_reservation_for_not_taken_date_create_reservation_should_succed()
     {
-        var weeklyParkingSpot = _weeklyParkingSpots.First();
+        var weeklyParkingSpot = _weeklyParkingSpotRepository.GetAll().First();
         var command = new CreateReservation(weeklyParkingSpot.Id,
             Guid.NewGuid(), DateTime.UtcNow.AddMinutes(5), "John Doe", "XYZ123");
 
@@ -24,21 +24,15 @@ public class ReservationServiceTests
 
     #region Arrange
 
-    private static readonly Clock _clock = new Clock();
-    private readonly ReservationsService _reservationsService;
-    private readonly List<WeeklyParkingSpot> _weeklyParkingSpots;
+    private readonly IClock _clock;
+    private readonly IWeeklyParkingSpotRepository _weeklyParkingSpotRepository;
+    private readonly IReservationsService _reservationsService;
 
     public ReservationServiceTests()
     {
-        _weeklyParkingSpots = new List<WeeklyParkingSpot>()
-        {
-            new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000001"), new Week(_clock.Current()), "P1"),
-            new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000002"), new Week(_clock.Current()), "P2"),
-            new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000003"), new Week(_clock.Current()), "P3"),
-            new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000004"), new Week(_clock.Current()), "P4"),
-            new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000005"), new Week(_clock.Current()), "P5")
-        };
-        _reservationsService = new ReservationsService(_clock, _weeklyParkingSpots);
+        _clock = new TestClock();
+        _weeklyParkingSpotRepository = new InMemoryWeeklyParkingSpotRepository(_clock);
+        _reservationsService = new ReservationsService(_clock, _weeklyParkingSpotRepository);
     }
 
     #endregion
