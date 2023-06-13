@@ -12,7 +12,7 @@ public class WeeklyParkingSpot
     public string Name { get; }
     public IEnumerable<Reservation> Reservations => _reservations;
 
-    public WeeklyParkingSpot(Guid id, Week week, string name)
+    public WeeklyParkingSpot(ParkingSpotId id, Week week, string name)
     {
         Id = id;
         Week = week;
