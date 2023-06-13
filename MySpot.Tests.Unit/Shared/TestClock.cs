@@ -1,8 +1,8 @@
-﻿using MySpot.Api.Services;
+﻿using MySpot.Application.Services;
 
 namespace MySpot.Tests.Unit.Shared;
 
 public class TestClock : IClock
 {
-    public DateTime Current() => new DateTime(2023, 06, 13);
+    public DateTime Current() => new(2023, 06, 13);
 }
