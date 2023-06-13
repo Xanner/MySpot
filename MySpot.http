@@ -12,10 +12,10 @@ POST {{url}}/reservations
 Content-Type: application/json
 
 {
-    "{{parkingSpotId}}":"{{parkingSpotId}}",
+    "parkingSpotId":"{{parkingSpotId}}",
     "employeeName": "John Doe",
     "licensePlate": "XYZ123",
-    "date":"2022-08-15"
+    "date":"2023-06-14"
 }
 
 ###
