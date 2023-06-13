@@ -1,4 +1,5 @@
-﻿using MySpot.Api.Exceptions;
+﻿using MySpot.Api.Commands;
+using MySpot.Api.Exceptions;
 
 namespace MySpot.Api.Entities;
 
@@ -40,5 +41,16 @@ public class WeeklyParkingSpot
         }
 
         _reservations.Add(reservation);
+    }
+
+    public void RemoveReservation(Guid reservationId)
+    {
+        var existingReservation = _reservations.SingleOrDefault(x => x.Id == reservationId);
+        if (existingReservation is null)
+        {
+            throw new Exception(); //TODO
+        }
+
+        _reservations.Remove(existingReservation);
     }
 }
