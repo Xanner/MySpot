@@ -7,10 +7,15 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\MySpot.Application\MySpot.Application.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="DAL\Migrations\" />
 	</ItemGroup>
 
 </Project>

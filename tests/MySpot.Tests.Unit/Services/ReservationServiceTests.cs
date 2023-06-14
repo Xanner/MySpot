@@ -4,7 +4,7 @@ using MySpot.Application.Services;
 using MySpot.Tests.Unit.Shared;
 using Shouldly;
 using Xunit;
-using MySpot.Infrastructure.Repositories;
+using MySpot.Infrastructure.DAL.Repositories;
 
 namespace MySpot.Tests.Unit.Services;
 

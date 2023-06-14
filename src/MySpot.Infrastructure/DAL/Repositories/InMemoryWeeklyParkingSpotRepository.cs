@@ -5,7 +5,7 @@ using MySpot.Core.Repositories;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("MySpot.Tests.Unit")]
-namespace MySpot.Infrastructure.Repositories;
+namespace MySpot.Infrastructure.DAL.Repositories;
 
 internal class InMemoryWeeklyParkingSpotRepository : IWeeklyParkingSpotRepository
 {
