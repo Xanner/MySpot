@@ -10,7 +10,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\MySpot.Application\MySpot.Application.csproj" />
+	  <ProjectReference Include="..\MySpot.Application\MySpot.Application.csproj" />
 	</ItemGroup>
 
 </Project>
