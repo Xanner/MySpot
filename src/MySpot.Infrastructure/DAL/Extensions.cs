@@ -12,7 +12,8 @@ internal static class Extensions
         const string connectionString = "Host=localhost;Database=MySpot;Username=postgres;Password=password";
         services
             .AddDbContext<MySpotDbContext>(x => x.UseNpgsql(connectionString))
-            .AddScoped<IWeeklyParkingSpotRepository, PostgresWeeklyParkingSpotRepository>();
+            .AddScoped<IWeeklyParkingSpotRepository, PostgresWeeklyParkingSpotRepository>()
+            .AddHostedService<DatabaseInitializer>();
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
         return services;
