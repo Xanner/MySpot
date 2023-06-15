@@ -1,6 +1,10 @@
 @url = http://localhost:5000
 @reservationId = 00000000-0000-0000-0000-000000000001
 @parkingSpotId = 00000000-0000-0000-0000-000000000001
+
+###
+GET {{url}}
+
 ###
 GET {{url}}/reservations
 
