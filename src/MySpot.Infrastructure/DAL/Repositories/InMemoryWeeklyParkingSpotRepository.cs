@@ -23,20 +23,23 @@ internal class InMemoryWeeklyParkingSpotRepository : IWeeklyParkingSpotRepositor
         };
     }
 
-    public WeeklyParkingSpot Get(ParkingSpotId id)
-        => _weeklyParkingSpots.SingleOrDefault(x => x.Id == id);
+    public Task<WeeklyParkingSpot> GetAsync(ParkingSpotId id)
+        => Task.FromResult(_weeklyParkingSpots.SingleOrDefault(x => x.Id == id));
 
-    public IEnumerable<WeeklyParkingSpot> GetAll()
-        => _weeklyParkingSpots;
+    public Task<IEnumerable<WeeklyParkingSpot>> GetAllAsync()
+        => Task.FromResult(_weeklyParkingSpots.AsEnumerable());
 
-
-    public void Add(WeeklyParkingSpot weeklyParkingSpot)
-        => _weeklyParkingSpots.Add(weeklyParkingSpot);
-
-    public void Delete(WeeklyParkingSpot weeklyParkingSpot)
+    public Task AddAsync(WeeklyParkingSpot weeklyParkingSpot)
     {
+        _weeklyParkingSpots.Add(weeklyParkingSpot);
+        return Task.CompletedTask;
     }
 
-    public void Update(WeeklyParkingSpot weeklyParkingSpot)
-        => _weeklyParkingSpots.Remove(weeklyParkingSpot);
+    public Task UpdateAsync(WeeklyParkingSpot weeklyParkingSpot) => Task.CompletedTask;
+
+    public Task DeleteAsync(WeeklyParkingSpot weeklyParkingSpot)
+    {
+        _weeklyParkingSpots.Remove(weeklyParkingSpot);
+        return Task.CompletedTask;
+    }
 }

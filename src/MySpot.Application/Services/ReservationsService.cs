@@ -17,24 +17,31 @@ public class ReservationsService : IReservationsService
         _weeklyParkingSpotRepository = weeklyParkingSpotRepository;
     }
 
-    public ReservationDto Get(Guid id)
-        => GetAllWeekly().SingleOrDefault(x => x.Id == id);
+    public async Task<ReservationDto> GetAsync(Guid id)
+    {
+        var reservations = await GetAllWeeklyAsync();
+        return reservations.SingleOrDefault(x => x.Id == id);
+    }
 
-    public IEnumerable<ReservationDto> GetAllWeekly()
-        => _weeklyParkingSpotRepository.GetAll().SelectMany(x => x.Reservations)
-        .Select(x => new ReservationDto
-        {
-            Id = x.Id,
-            ParkingSpotId = x.ParkingSpotId,
-            EmployeeName = x.EmployeeName,
-            LicensePlate = x.LicensePlate,
-            Date = x.Date.Value.Date,
-        });
+    public async Task<IEnumerable<ReservationDto>> GetAllWeeklyAsync()
+    {
+        var weeklyParkingSpots = await _weeklyParkingSpotRepository.GetAllAsync();
 
-    public Guid? Create(CreateReservation command)
+        return weeklyParkingSpots.SelectMany(x => x.Reservations)
+            .Select(x => new ReservationDto
+            {
+                Id = x.Id,
+                ParkingSpotId = x.ParkingSpotId,
+                EmployeeName = x.EmployeeName,
+                LicensePlate = x.LicensePlate,
+                Date = x.Date.Value.Date,
+            });
+    }
+
+    public async Task<Guid?> CreateAsync(CreateReservation command)
     {
         var parkingSpotId = new ParkingSpotId(command.ParkingSpotId);
-        var weeklyParkingSpot = _weeklyParkingSpotRepository.Get(parkingSpotId);
+        var weeklyParkingSpot = await _weeklyParkingSpotRepository.GetAsync(parkingSpotId);
         if (weeklyParkingSpot is null)
         {
             return default;
@@ -47,15 +54,15 @@ public class ReservationsService : IReservationsService
             new Date(command.Date)
             );
         weeklyParkingSpot.AddReservation(reservation, new Date(_clock.Current()));
-        _weeklyParkingSpotRepository.Update(weeklyParkingSpot);
+        await _weeklyParkingSpotRepository.UpdateAsync(weeklyParkingSpot);
 
         return command.ReservationId;
     }
 
-    public bool Update(ChangeReservationLicensePlate command)
+    public async Task<bool> UpdateAsync(ChangeReservationLicensePlate command)
     {
-        var weeklyParkingSpot = GetWeeklyParkingSpotByReservation(command.ReservationId);
-        if(weeklyParkingSpot is null)
+        var weeklyParkingSpot = await GetWeeklyParkingSpotByReservationAsync(command.ReservationId);
+        if (weeklyParkingSpot is null)
         {
             return false;
         }
@@ -73,14 +80,14 @@ public class ReservationsService : IReservationsService
         }
 
         existingReservation.ChangeLicensePlate(command.LicensePlate);
-        _weeklyParkingSpotRepository.Update(weeklyParkingSpot);
+        await _weeklyParkingSpotRepository.UpdateAsync(weeklyParkingSpot);
 
         return true;
     }
 
-    public bool Delete(DeleteReservation command)
+    public async Task<bool> DeleteAsync(DeleteReservation command)
     {
-        var weeklyParkingSpot = GetWeeklyParkingSpotByReservation(command.ReservationId);
+        var weeklyParkingSpot = await GetWeeklyParkingSpotByReservationAsync(command.ReservationId);
         if (weeklyParkingSpot is null)
         {
             return false;
@@ -94,11 +101,14 @@ public class ReservationsService : IReservationsService
         }
 
         weeklyParkingSpot.RemoveReservation(command.ReservationId);
-        _weeklyParkingSpotRepository.Delete(weeklyParkingSpot);
+        await _weeklyParkingSpotRepository.DeleteAsync(weeklyParkingSpot);
 
         return true;
     }
 
-    private WeeklyParkingSpot GetWeeklyParkingSpotByReservation(ReservationId reservationId)
-        => _weeklyParkingSpotRepository.GetAll().SingleOrDefault(x => x.Reservations.Any(r => r.Id == reservationId));
+    private async Task<WeeklyParkingSpot> GetWeeklyParkingSpotByReservationAsync(ReservationId reservationId)
+    {
+        var weeklyParkingSpots = await _weeklyParkingSpotRepository.GetAllAsync();
+        return weeklyParkingSpots.SingleOrDefault(x => x.Reservations.Any(r => r.Id == reservationId));
+    }
 }
