@@ -5,6 +5,7 @@ using MySpot.Tests.Unit.Shared;
 using Shouldly;
 using Xunit;
 using MySpot.Infrastructure.DAL.Repositories;
+using MySpot.Core.Abstractions;
 
 namespace MySpot.Tests.Unit.Services;
 
@@ -14,10 +15,10 @@ public class ReservationServiceTests
     public async Task given_reservation_for_not_taken_date_create_reservation_should_succed()
     {
         var weeklyParkingSpot = (await _weeklyParkingSpotRepository.GetAllAsync()).First();
-        var command = new CreateReservation(weeklyParkingSpot.Id,
+        var command = new ReserveParkingSpotForVehicle(weeklyParkingSpot.Id,
             Guid.NewGuid(), DateTime.UtcNow.AddMinutes(5), "John Doe", "XYZ123");
 
-        var reservationId = await _reservationsService.CreateAsync(command);
+        var reservationId = await _reservationsService.ReserveForVehicleAsync(command);
 
         reservationId.ShouldNotBeNull();
         reservationId.Value.ShouldBe(command.ReservationId);

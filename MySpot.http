@@ -12,14 +12,22 @@ GET {{url}}/reservations
 GET {{url}}/reservations/{{reservationId}}
 
 ###
-POST {{url}}/reservations
+POST {{url}}/reservations/vehicle
 Content-Type: application/json
 
 {
     "parkingSpotId":"{{parkingSpotId}}",
     "employeeName": "John Doe",
     "licensePlate": "XYZ123",
-    "date":"2023-06-14"
+    "date":"2023-06-17"
+}
+
+###
+POST {{url}}/reservations/cleaning
+Content-Type: application/json
+
+{
+    "date":"2023-06-18"
 }
 
 ###
