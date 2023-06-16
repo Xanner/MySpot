@@ -131,13 +131,12 @@ public class ReservationsService : IReservationsService
 
         _parkingReservationService.ReserveParkingForCleaning(weeklyParkingSpots, new Date(command.Date));
 
-        var tasks = weeklyParkingSpots.Select(x => _weeklyParkingSpotRepository.UpdateAsync(x));
+        //var tasks = weeklyParkingSpots.Select(x => _weeklyParkingSpotRepository.UpdateAsync(x));
+        //await Task.WhenAll(tasks);
 
-        await Task.WhenAll(tasks);
-
-        //foreach(var parkingSpot  in weeklyParkingSpots)
-        //{
-        //    await _weeklyParkingSpotRepository.UpdateAsync(parkingSpot);
-        //}
+        foreach (var parkingSpot in weeklyParkingSpots)
+        {
+            await _weeklyParkingSpotRepository.UpdateAsync(parkingSpot);
+        }
     }
 }
