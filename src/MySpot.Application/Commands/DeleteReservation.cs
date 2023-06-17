@@ -1,3 +1,5 @@
-﻿namespace MySpot.Application.Commands;
+﻿using MySpot.Application.Abstractions;
 
-public record DeleteReservation(Guid ReservationId);
+namespace MySpot.Application.Commands;
+
+public record DeleteReservation(Guid ReservationId) : ICommand;

@@ -3,41 +3,35 @@
 @parkingSpotId = 00000000-0000-0000-0000-000000000001
 
 ###
-GET {{url}}
+GET {{url}}/parking-spots
 
 ###
-GET {{url}}/reservations
-
-###
-GET {{url}}/reservations/{{reservationId}}
-
-###
-POST {{url}}/reservations/vehicle
+POST {{url}}/parking-spots/{{parkingSpotId}}/reservations/vehicle
 Content-Type: application/json
 
 {
-    "parkingSpotId":"{{parkingSpotId}}",
-    "capacity": 1,
-    "employeeName": "John Doe",
-    "licensePlate": "XYZ123",
-    "date":"2023-06-17"
+    "parkingSpotId": "{{parkingSpotId}}",
+    "date": "2022-04-26",
+    "licencePlate": "XYZ123"
 }
 
 ###
-POST {{url}}/reservations/cleaning
+POST {{url}}/parking-spots/reservations/cleaning
 Content-Type: application/json
 
 {
-    "date":"2023-06-18"
+    "date": "2022-04-26"
 }
 
+
 ###
-PUT {{url}}/reservations/{{reservationId}}
+PUT {{url}}/parking-spots/reservations/{{reservationId}}
 Content-Type: application/json
 
 {
-    "licensePlate": "ZYX321"
+    "licencePlate": "XYZ1234"
 }
 
+
 ###
-DELETE {{url}}/reservations/{{reservationId}}
+DELETE {{url}}/parking-spots/reservations/{{reservationId}}
