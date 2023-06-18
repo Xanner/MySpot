@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using MySpot.Infrastructure;
 
@@ -7,13 +7,13 @@ namespace MySpot.Api.Controllers;
 [Route("")]
 public class HomeController : ControllerBase
 {
-    private readonly string _name;
+    private readonly AppOptions _appOptions;
 
     public HomeController(IOptions<AppOptions> appOptions)
     {
-        _name = appOptions.Value.Name;
+        _appOptions = appOptions.Value;
     }
-
+    
     [HttpGet]
-    public ActionResult<string> Get() => _name;
+    public ActionResult Get() => Ok(_appOptions.Name);
 }

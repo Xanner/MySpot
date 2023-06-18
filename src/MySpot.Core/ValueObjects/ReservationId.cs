@@ -1,9 +1,9 @@
-﻿using MySpot.Core.Exceptions;
+using MySpot.Core.Exceptions;
 
 namespace MySpot.Core.ValueObjects;
 
-    public record ReservationId
-    {
+public sealed record ReservationId
+{
     public Guid Value { get; }
 
     public ReservationId(Guid value)
@@ -20,7 +20,7 @@ namespace MySpot.Core.ValueObjects;
 
     public static implicit operator Guid(ReservationId date)
         => date.Value;
-
+    
     public static implicit operator ReservationId(Guid value)
         => new(value);
 }

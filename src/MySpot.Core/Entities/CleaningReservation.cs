@@ -1,15 +1,10 @@
-﻿using MySpot.Core.ValueObjects;
+using MySpot.Core.ValueObjects;
 
 namespace MySpot.Core.Entities;
 
-public sealed class CleaningReservation : Reservation
+public class CleaningReservation : Reservation
 {
-    private CleaningReservation()
-    {
-    }
-
-    public CleaningReservation(ReservationId id, ParkingSpotId parkingSpotId, Date date)
-        : base(id, parkingSpotId, 2, date)
+    public CleaningReservation(ReservationId id, Date date) : base(id, capacity:2, date)
     {
     }
 }

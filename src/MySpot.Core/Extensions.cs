@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using MySpot.Core.DomainServices;
 using MySpot.Core.Policies;
 
@@ -8,12 +8,11 @@ public static class Extensions
 {
     public static IServiceCollection AddCore(this IServiceCollection services)
     {
-        services
-            .AddSingleton<IReservationPolicy, RegularEmployeeReservationPolicy>()
-            .AddSingleton<IReservationPolicy, ManagerReservationPolicy>()
-            .AddSingleton<IReservationPolicy, BossReservationPolicy>()
-            .AddSingleton<IParkingReservationService, ParkingReservationService>();
-
+        services.AddSingleton<IReservationPolicy, RegularEmployeeReservationPolicy>();
+        services.AddSingleton<IReservationPolicy, ManagerReservationPolicy>();
+        services.AddSingleton<IReservationPolicy, BossReservationPolicy>();
+        services.AddSingleton<IParkingReservationService, ParkingReservationService>();
+        
         return services;
     }
 }

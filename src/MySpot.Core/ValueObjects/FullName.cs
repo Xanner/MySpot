@@ -5,14 +5,14 @@ namespace MySpot.Core.ValueObjects;
 public sealed record FullName
 {
     public string Value { get; }
-
+        
     public FullName(string value)
     {
         if (string.IsNullOrWhiteSpace(value) || value.Length is > 100 or < 3)
         {
             throw new InvalidFullNameException(value);
         }
-
+            
         Value = value;
     }
 

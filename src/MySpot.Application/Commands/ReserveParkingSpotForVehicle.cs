@@ -1,6 +1,6 @@
-﻿using MySpot.Application.Abstractions;
+using MySpot.Application.Abstractions;
 
 namespace MySpot.Application.Commands;
 
-public record ReserveParkingSpotForVehicle(Guid ParkingSpotId, Guid ReservationId, int Capacity,
-    DateTime Date, string EmployeeName, string LicensePlate) : ICommand;
+public sealed record ReserveParkingSpotForVehicle(Guid ParkingSpotId, Guid ReservationId, Guid UserId,
+    string LicencePlate, int Capacity, DateTime Date) : ICommand;

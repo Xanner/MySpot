@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using MySpot.Core.Entities;
 using MySpot.Core.Repositories;
 using MySpot.Core.ValueObjects;
@@ -20,8 +20,8 @@ internal sealed class PostgresUserRepository : IUserRepository
     public Task<User> GetByEmailAsync(Email email)
         => _users.SingleOrDefaultAsync(x => x.Email == email);
 
-    public Task<User> GetByUserNameAsync(UserName userName)
-        => _users.SingleOrDefaultAsync(x => x.UserName == userName);
+    public Task<User> GetByUsernameAsync(Username username)
+        => _users.SingleOrDefaultAsync(x => x.Username == username);
 
     public async Task AddAsync(User user)
         => await _users.AddAsync(user);

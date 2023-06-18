@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using MySpot.Application.Abstractions;
 
 namespace MySpot.Application;
@@ -9,11 +9,11 @@ public static class Extensions
     {
         var applicationAssembly = typeof(ICommandHandler<>).Assembly;
 
-        services.Scan(services => services.FromAssemblies(applicationAssembly)
+        services.Scan(s => s.FromAssemblies(applicationAssembly)
             .AddClasses(c => c.AssignableTo(typeof(ICommandHandler<>)))
             .AsImplementedInterfaces()
             .WithScopedLifetime());
-
+        
         return services;
     }
 }

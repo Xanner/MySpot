@@ -1,4 +1,4 @@
-﻿using MySpot.Core.Exceptions;
+using MySpot.Core.Exceptions;
 
 namespace MySpot.Core.ValueObjects;
 
@@ -17,6 +17,6 @@ public sealed record UserId
     }
 
     public static implicit operator Guid(UserId date) => date.Value;
-
+    
     public static implicit operator UserId(Guid value) => new(value);
 }

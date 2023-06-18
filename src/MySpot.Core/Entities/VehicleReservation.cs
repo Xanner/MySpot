@@ -1,24 +1,25 @@
-﻿using MySpot.Core.ValueObjects;
+using MySpot.Core.ValueObjects;
 
 namespace MySpot.Core.Entities;
 
-public sealed class VehicleReservation : Reservation
+public class VehicleReservation : Reservation
 {
+    public UserId UserId { get; private set; }
     public EmployeeName EmployeeName { get; private set; }
-    public LicensePlate LicensePlate { get; private set; }
+    public LicencePlate LicencePlate { get; private set; }
 
     private VehicleReservation()
     {
     }
 
-    public VehicleReservation(ReservationId id, ParkingSpotId parkingSpotId,
-        EmployeeName employeeName, LicensePlate licensePlate, Capacity capacity, Date date)
-        : base(id, parkingSpotId, capacity, date)
+    public VehicleReservation(ReservationId reservationId, UserId userId, EmployeeName employeeName,
+        LicencePlate licencePlate, Capacity capacity, Date date) : base(reservationId, capacity, date)
     {
+        UserId = userId;
         EmployeeName = employeeName;
-        ChangeLicensePlate(licensePlate);
+        LicencePlate = licencePlate;
     }
 
-    public void ChangeLicensePlate(LicensePlate licensePlate)
-        => LicensePlate = licensePlate;
+    public void ChangeLicencePlate(LicencePlate licencePlate)
+        => LicencePlate = licencePlate;
 }

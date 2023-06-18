@@ -1,4 +1,4 @@
-﻿namespace MySpot.Infrastructure.DAL;
+namespace MySpot.Infrastructure.DAL;
 
 internal sealed class PostgresOptions
 {

@@ -1,4 +1,4 @@
-﻿namespace MySpot.Core.ValueObjects;
+namespace MySpot.Core.ValueObjects;
 
 public sealed record JobTitle
 {
@@ -15,5 +15,5 @@ public sealed record JobTitle
         => jobTitle.Value;
 
     public static implicit operator JobTitle(string value)
-        => new (value);
+        => new(value);
 }

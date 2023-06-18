@@ -12,15 +12,14 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MySpot.Infrastructure.DAL.Migrations
 {
     [DbContext(typeof(MySpotDbContext))]
-    [Migration("20230616141247_Cleaning_Reservation")]
-    partial class Cleaning_Reservation
+    [Migration("20220402180304_Users")]
+    partial class Users
     {
-        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.7")
+                .HasAnnotation("ProductVersion", "6.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -30,11 +29,11 @@ namespace MySpot.Infrastructure.DAL.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTimeOffset?>("Date")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<int>("Capacity")
+                        .HasColumnType("integer");
 
-                    b.Property<Guid?>("ParkingSpotId")
-                        .HasColumnType("uuid");
+                    b.Property<DateTimeOffset>("Date")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -50,8 +49,50 @@ namespace MySpot.Infrastructure.DAL.Migrations
                     b.ToTable("Reservations");
 
                     b.HasDiscriminator<string>("Type").HasValue("Reservation");
+                });
 
-                    b.UseTphMappingStrategy();
+            modelBuilder.Entity("MySpot.Core.Entities.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("Username")
+                        .IsUnique();
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("MySpot.Core.Entities.WeeklyParkingSpot", b =>
@@ -59,10 +100,14 @@ namespace MySpot.Infrastructure.DAL.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
 
+                    b.Property<int>("Capacity")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTimeOffset?>("Week")
+                    b.Property<DateTimeOffset>("Week")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
@@ -82,10 +127,17 @@ namespace MySpot.Infrastructure.DAL.Migrations
                     b.HasBaseType("MySpot.Core.Entities.Reservation");
 
                     b.Property<string>("EmployeeName")
+                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("LicensePlate")
+                    b.Property<string>("LicencePlate")
+                        .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasIndex("UserId");
 
                     b.HasDiscriminator().HasValue("VehicleReservation");
                 });
@@ -95,6 +147,15 @@ namespace MySpot.Infrastructure.DAL.Migrations
                     b.HasOne("MySpot.Core.Entities.WeeklyParkingSpot", null)
                         .WithMany("Reservations")
                         .HasForeignKey("WeeklyParkingSpotId");
+                });
+
+            modelBuilder.Entity("MySpot.Core.Entities.VehicleReservation", b =>
+                {
+                    b.HasOne("MySpot.Core.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MySpot.Core.Entities.WeeklyParkingSpot", b =>

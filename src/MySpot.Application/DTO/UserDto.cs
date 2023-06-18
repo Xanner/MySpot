@@ -1,8 +1,8 @@
-﻿namespace MySpot.Application.DTO;
+namespace MySpot.Application.DTO;
 
 public class UserDto
 {
-    public Guid Id{ get; set; }
-    public int UserName { get; set; }
-    public int FullName { get; set; }
+    public Guid Id { get; set; }
+    public string Username { get; set; }
+    public string FullName { get; set; }
 }

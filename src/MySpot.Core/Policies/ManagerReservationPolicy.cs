@@ -1,11 +1,11 @@
-﻿using MySpot.Core.Entities;
+using MySpot.Core.Entities;
 using MySpot.Core.ValueObjects;
 
 namespace MySpot.Core.Policies;
 
 internal sealed class ManagerReservationPolicy : IReservationPolicy
 {
-    public bool CanBeAplied(JobTitle jobTitle)
+    public bool CanBeApplied(JobTitle jobTitle)
         => jobTitle == JobTitle.Manager;
 
     public bool CanReserve(IEnumerable<WeeklyParkingSpot> weeklyParkingSpots, EmployeeName employeeName)

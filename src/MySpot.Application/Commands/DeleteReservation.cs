@@ -1,5 +1,5 @@
-﻿using MySpot.Application.Abstractions;
+using MySpot.Application.Abstractions;
 
 namespace MySpot.Application.Commands;
 
-public record DeleteReservation(Guid ReservationId) : ICommand;
+public sealed record DeleteReservation(Guid ReservationId) : ICommand;

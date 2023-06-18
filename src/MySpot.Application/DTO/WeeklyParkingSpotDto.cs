@@ -1,4 +1,4 @@
-﻿namespace MySpot.Application.DTO;
+namespace MySpot.Application.DTO;
 
 public class WeeklyParkingSpotDto
 {

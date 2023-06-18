@@ -1,4 +1,4 @@
-﻿using Humanizer;
+using Humanizer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using MySpot.Core.Exceptions;
@@ -13,22 +13,22 @@ internal sealed class ExceptionMiddleware : IMiddleware
     {
         _logger = logger;
     }
-
+    
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
-		try
-		{
-			await next(context);
-		}
-		catch (Exception exception)
-		{
+        try
+        {
+            await next(context);
+        }
+        catch (Exception exception)
+        {
             _logger.LogError(exception, exception.Message);
-			await HandleExceptionAsync(exception, context);
-		}
+            await HandleExceptionAsync(exception, context);
+        }
     }
 
-	public static async Task HandleExceptionAsync(Exception exception, HttpContext context)
-	{
+    private async Task HandleExceptionAsync(Exception exception, HttpContext context)
+    {
         var (statusCode, error) = exception switch
         {
             CustomException => (StatusCodes.Status400BadRequest,
@@ -36,9 +36,11 @@ internal sealed class ExceptionMiddleware : IMiddleware
             _ => (StatusCodes.Status500InternalServerError, new Error("error", "There was an error."))
         };
 
-		context.Response.StatusCode = statusCode;
-		await context.Response.WriteAsJsonAsync(error);
+        context.Response.StatusCode = statusCode;
+        await context.Response.WriteAsJsonAsync(error);
     }
 
-	private record Error(string Code, string Reason);
+    private record Error(string Code, string Reason);
+    
+    
 }

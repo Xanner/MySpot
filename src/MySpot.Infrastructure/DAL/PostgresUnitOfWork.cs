@@ -1,5 +1,3 @@
-﻿using System.Transactions;
-
 namespace MySpot.Infrastructure.DAL;
 
 internal sealed class PostgresUnitOfWork : IUnitOfWork
@@ -7,9 +5,7 @@ internal sealed class PostgresUnitOfWork : IUnitOfWork
     private readonly MySpotDbContext _dbContext;
 
     public PostgresUnitOfWork(MySpotDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
+        => _dbContext = dbContext;
 
     public async Task ExecuteAsync(Func<Task> action)
     {

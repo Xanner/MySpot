@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using MySpot.Application.Security;
 using MySpot.Core.Entities;
 
@@ -16,5 +16,6 @@ internal sealed class PasswordManager : IPasswordManager
     public string Secure(string password) => _passwordHasher.HashPassword(default, password);
 
     public bool Validate(string password, string securedPassword)
-        => _passwordHasher.VerifyHashedPassword(default, securedPassword, password) is PasswordVerificationResult.Success;
+        => _passwordHasher.VerifyHashedPassword(default, securedPassword, password) ==
+           PasswordVerificationResult.Success;
 }

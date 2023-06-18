@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using MySpot.Core.Entities;
 
 namespace MySpot.Infrastructure.DAL;
@@ -9,9 +9,8 @@ internal sealed class MySpotDbContext : DbContext
     public DbSet<WeeklyParkingSpot> WeeklyParkingSpots { get; set; }
     public DbSet<User> Users { get; set; }
 
-    public MySpotDbContext(DbContextOptions<MySpotDbContext> dbContextOptions) : base(dbContextOptions)
+    public MySpotDbContext(DbContextOptions<MySpotDbContext> options) : base(options)
     {
-
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

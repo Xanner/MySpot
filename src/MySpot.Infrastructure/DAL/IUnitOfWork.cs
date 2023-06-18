@@ -1,6 +1,6 @@
-﻿namespace MySpot.Infrastructure.DAL;
+namespace MySpot.Infrastructure.DAL;
 
-internal interface IUnitOfWork
+public interface IUnitOfWork
 {
     Task ExecuteAsync(Func<Task> action);
 }

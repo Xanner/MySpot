@@ -1,19 +1,19 @@
-﻿using MySpot.Application.Abstractions;
+using MySpot.Application.Abstractions;
+using MySpot.Application.Exceptions;
 using MySpot.Core.Entities;
 using MySpot.Core.Repositories;
 using MySpot.Core.ValueObjects;
-using MySpot.Application.Exceptions;
 
 namespace MySpot.Application.Commands.Handlers;
 
-internal sealed class ChangeReservationLicensePlateHandler : ICommandHandler<ChangeReservationLicensePlate>
+public sealed class ChangeReservationLicencePlateHandler : ICommandHandler<ChangeReservationLicencePlate>
 {
     private readonly IWeeklyParkingSpotRepository _repository;
 
-    public ChangeReservationLicensePlateHandler(IWeeklyParkingSpotRepository repository)
+    public ChangeReservationLicencePlateHandler(IWeeklyParkingSpotRepository repository)
         => _repository = repository;
 
-    public async Task HandleAsync(ChangeReservationLicensePlate command)
+    public async Task HandleAsync(ChangeReservationLicencePlate command)
     {
         var weeklyParkingSpot = await GetWeeklyParkingSpotByReservation(command.ReservationId);
         if (weeklyParkingSpot is null)
@@ -22,20 +22,20 @@ internal sealed class ChangeReservationLicensePlateHandler : ICommandHandler<Cha
         }
 
         var reservationId = new ReservationId(command.ReservationId);
-        var existingReservation = weeklyParkingSpot.Reservations
+        var reservation = weeklyParkingSpot.Reservations
             .OfType<VehicleReservation>()
             .SingleOrDefault(x => x.Id == reservationId);
 
-        if (existingReservation is null)
+        if (reservation is null)
         {
             throw new ReservationNotFoundException(command.ReservationId);
         }
-
-        existingReservation.ChangeLicensePlate(command.LicensePlate);
+    
+        reservation.ChangeLicencePlate(command.LicencePlate);
         await _repository.UpdateAsync(weeklyParkingSpot);
     }
-
+    
     private async Task<WeeklyParkingSpot> GetWeeklyParkingSpotByReservation(ReservationId id)
         => (await _repository.GetAllAsync())
-            .SingleOrDefault(x => x.Reservations.Any(r => r.Id == id)); 
+            .SingleOrDefault(x => x.Reservations.Any(r => r.Id == id));
 }

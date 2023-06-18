@@ -1,4 +1,4 @@
-﻿using MySpot.Core.Exceptions;
+using MySpot.Core.Exceptions;
 
 namespace MySpot.Core.ValueObjects;
 
@@ -20,7 +20,7 @@ public sealed record ParkingSpotId
 
     public static implicit operator Guid(ParkingSpotId date)
         => date.Value;
-
+    
     public static implicit operator ParkingSpotId(Guid value)
         => new(value);
 

@@ -1,4 +1,4 @@
-﻿using MySpot.Core.Exceptions;
+using MySpot.Core.Exceptions;
 
 namespace MySpot.Application.Exceptions;
 

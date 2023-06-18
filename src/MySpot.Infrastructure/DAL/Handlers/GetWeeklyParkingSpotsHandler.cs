@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using MySpot.Application.Abstractions;
 using MySpot.Application.DTO;
 using MySpot.Application.Queries;
@@ -10,7 +10,7 @@ internal sealed class GetWeeklyParkingSpotsHandler : IQueryHandler<GetWeeklyPark
 {
     private readonly MySpotDbContext _dbContext;
 
-    public GetWeeklyParkingSpotsHandler(MySpotDbContext dbContext) 
+    public GetWeeklyParkingSpotsHandler(MySpotDbContext dbContext)
         => _dbContext = dbContext;
 
     public async Task<IEnumerable<WeeklyParkingSpotDto>> HandleAsync(GetWeeklyParkingSpots query)

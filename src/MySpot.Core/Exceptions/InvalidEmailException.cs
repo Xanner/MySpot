@@ -1,4 +1,4 @@
-﻿namespace MySpot.Core.Exceptions;
+namespace MySpot.Core.Exceptions;
 
 public sealed class InvalidEmailException : CustomException
 {

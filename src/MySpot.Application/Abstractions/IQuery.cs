@@ -1,4 +1,4 @@
-﻿namespace MySpot.Application.Abstractions;
+namespace MySpot.Application.Abstractions;
 
 public interface IQuery<TResult>
 {

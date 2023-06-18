@@ -1,8 +1,8 @@
-﻿using MySpot.Core.Abstractions;
+using MySpot.Core.Abstractions;
 
 namespace MySpot.Infrastructure.Time;
 
-public class Clock : IClock
+internal sealed class Clock : IClock
 {
     public DateTime Current() => DateTime.UtcNow;
 }

@@ -1,4 +1,4 @@
-﻿namespace MySpot.Core.Abstractions;
+namespace MySpot.Core.Abstractions;
 
 public interface IClock
 {

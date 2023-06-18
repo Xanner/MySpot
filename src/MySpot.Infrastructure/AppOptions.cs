@@ -1,4 +1,4 @@
-﻿namespace MySpot.Infrastructure;
+namespace MySpot.Infrastructure;
 
 public sealed class AppOptions
 {

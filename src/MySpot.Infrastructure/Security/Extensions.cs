@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using MySpot.Application.Security;
 using MySpot.Core.Entities;
@@ -11,7 +11,7 @@ internal static class Extensions
     {
         services
             .AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>()
-            .AddSingleton<IPasswordManager, PasswordManager>(); 
+            .AddSingleton<IPasswordManager, PasswordManager>();
 
         return services;
     }

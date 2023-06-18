@@ -1,5 +1,3 @@
-﻿using MySpot.Core.Exceptions;
-
 namespace MySpot.Core.Exceptions;
 
 public class InvalidParkingSpotNameException : CustomException

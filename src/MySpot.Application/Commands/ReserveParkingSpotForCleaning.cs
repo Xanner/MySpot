@@ -1,4 +1,4 @@
-﻿using MySpot.Application.Abstractions;
+using MySpot.Application.Abstractions;
 
 namespace MySpot.Application.Commands;
 

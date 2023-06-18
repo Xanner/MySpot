@@ -1,4 +1,4 @@
-﻿using MySpot.Core.Abstractions;
+using MySpot.Core.Abstractions;
 using MySpot.Core.Entities;
 using MySpot.Core.ValueObjects;
 
@@ -10,8 +10,8 @@ internal sealed class RegularEmployeeReservationPolicy : IReservationPolicy
 
     public RegularEmployeeReservationPolicy(IClock clock)
         => _clock = clock;
-
-    public bool CanBeAplied(JobTitle jobTitle)
+    
+    public bool CanBeApplied(JobTitle jobTitle)
         => jobTitle == JobTitle.Employee;
 
     public bool CanReserve(IEnumerable<WeeklyParkingSpot> weeklyParkingSpots, EmployeeName employeeName)
@@ -21,7 +21,6 @@ internal sealed class RegularEmployeeReservationPolicy : IReservationPolicy
             .OfType<VehicleReservation>()
             .Count(x => x.EmployeeName == employeeName);
 
-        return totalEmployeeReservations < 2 && _clock.Current().Hour > 4;   
+        return totalEmployeeReservations < 2 && _clock.Current().Hour > 4;
     }
 }
-    

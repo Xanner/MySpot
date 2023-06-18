@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using MySpot.Core.Entities;
 using MySpot.Core.ValueObjects;
@@ -17,9 +17,9 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
             .HasConversion(x => x.Value, x => new Email(x))
             .IsRequired()
             .HasMaxLength(100);
-        builder.HasIndex(x => x.UserName).IsUnique();
-        builder.Property(x => x.UserName)
-            .HasConversion(x => x.Value, x => new UserName(x))
+        builder.HasIndex(x => x.Username).IsUnique();
+        builder.Property(x => x.Username)
+            .HasConversion(x => x.Value, x => new Username(x))
             .IsRequired()
             .HasMaxLength(30);
         builder.Property(x => x.Password)

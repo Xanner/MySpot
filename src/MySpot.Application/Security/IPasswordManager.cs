@@ -1,4 +1,4 @@
-﻿namespace MySpot.Application.Security;
+namespace MySpot.Application.Security;
 
 public interface IPasswordManager
 {

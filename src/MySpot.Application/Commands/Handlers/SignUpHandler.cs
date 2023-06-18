@@ -1,4 +1,4 @@
-﻿using MySpot.Application.Abstractions;
+using MySpot.Application.Abstractions;
 using MySpot.Application.Exceptions;
 using MySpot.Application.Security;
 using MySpot.Core.Abstractions;
@@ -25,17 +25,17 @@ internal sealed class SignUpHandler : ICommandHandler<SignUp>
     {
         var userId = new UserId(command.UserId);
         var email = new Email(command.Email);
-        var username = new UserName(command.UserName);
+        var username = new Username(command.Username);
         var password = new Password(command.Password);
         var fullName = new FullName(command.FullName);
         var role = string.IsNullOrWhiteSpace(command.Role) ? Role.User() : new Role(command.Role);
-
+        
         if (await _userRepository.GetByEmailAsync(email) is not null)
         {
             throw new EmailAlreadyInUseException(email);
         }
 
-        if (await _userRepository.GetByUserNameAsync(username) is not null)
+        if (await _userRepository.GetByUsernameAsync(username) is not null)
         {
             throw new UsernameAlreadyInUseException(username);
         }
